@@ -10,11 +10,21 @@ const server = net.createServer(function (socket) {
 
   socket.write("Enter Username: ");
 
-  
+  socket.loggedName = {};
+  socket.loggedName.userName = null;
 
   socket.on('data', function (data) {
     let info = data.toString();
     console.log(info);
+
+    if(socket.loggedName.userName === null){
+      socket.loggedName.userName = data.trim();
+      console.log(socket.loggedName);
+    }
+    else{
+
+      let userName = socket.loggedName.userName
+    }
 
     information.filter(function(element){
       return element !== socket;
@@ -22,7 +32,7 @@ const server = net.createServer(function (socket) {
     }).forEach(function(element, index){
       // let first = information.indexOf(socket);
       // console.log("CONSOLE: " + element[0]);
-      element.write(data);
+      element.write(socket.loggedName.userName + ": " + data);
     });
 
   });
